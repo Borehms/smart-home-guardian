@@ -17,6 +17,24 @@
       "username": "johndoe",
       "password": "$2b$10$S6et.DsPw08eN0Kw0EaqFOIsXTsYTrHp0vroowgVjU60hRYhV0cDm",
       "role": "user"
+    },
+    {
+      "id": "TD9HrNLt0BqPSo3zHCsVj",
+      "username": "borehms",
+      "password": "$2b$10$6LD2Kt3Swi6UKqOEJpO4aOcrWvOSda01ds8uBIH/ahXD07Xi3KC7a",
+      "role": "user"
+    },
+    {
+      "id": "Qu4mH8BoC5x3ES4I0ASe0",
+      "username": "borehmss",
+      "password": "$2b$10$vFajng5z8jP0UNyI1h4Ml.9tnSW.B3jVdl6adjZLC3l5RKIqT8cpq",
+      "role": "primary"
+    },
+    {
+      "id": "6JP5FaJ1QaaH380b8FWpa",
+      "username": "joejoe",
+      "password": "$2b$10$0NwsR5HZ1GK4pIYYHLoW6.SJ6cxQsTs.RsnNaFQn0VGLYwpGk8loi",
+      "role": "user"
     }
   ],
   "requests": [
@@ -49,6 +67,76 @@
       "password": "PassUser123*",
       "status": "declined",
       "createdAt": "2025-06-25T07:12:40.130Z"
+    },
+    {
+      "id": "XkYmKfmKSj1wTOJbwpdIN",
+      "fullName": "",
+      "username": "",
+      "deviceName": "",
+      "macAddress": "",
+      "password": "",
+      "status": "declined",
+      "createdAt": "2025-06-25T13:20:08.157Z"
+    },
+    {
+      "id": "oUtSNIs_OUbO48V-d1xbS",
+      "fullName": "",
+      "username": "",
+      "deviceName": "",
+      "macAddress": "",
+      "password": "",
+      "status": "declined",
+      "createdAt": "2025-06-25T13:22:21.624Z"
+    },
+    {
+      "id": "jf6u7fYch3sF30ZrCDnIU",
+      "fullName": "",
+      "username": "",
+      "deviceName": "",
+      "macAddress": "",
+      "password": "",
+      "status": "declined",
+      "createdAt": "2025-06-25T13:29:30.681Z"
+    },
+    {
+      "id": "x06af2kugqm4e9EBdz3eh",
+      "fullName": "",
+      "username": "",
+      "deviceName": "",
+      "macAddress": "",
+      "password": "",
+      "status": "declined",
+      "createdAt": "2025-06-25T13:33:25.192Z"
+    },
+    {
+      "id": "J4WXfWGbn6o_9MaMjKiXK",
+      "fullName": "Sarah Doe",
+      "username": "sarahdoe",
+      "deviceName": "iPhone",
+      "macAddress": "Zzzzzzzzzz",
+      "password": "Sarah123Doe",
+      "status": "approved",
+      "createdAt": "2025-06-25T13:34:08.642Z"
+    },
+    {
+      "id": "ARMubpLyykOvFCLhr0v4Z",
+      "fullName": "John Jones",
+      "username": "Jonesboro",
+      "deviceName": "Android",
+      "macAddress": "Zzzzzzzzzz",
+      "password": "JonesBr06!",
+      "status": "declined",
+      "createdAt": "2025-06-25T13:55:20.076Z"
+    },
+    {
+      "id": "pA3mazU_oVocKipKa4Blx",
+      "fullName": "Jeremiah Olukanni",
+      "username": "JerryJer",
+      "deviceName": "iPhone",
+      "macAddress": "Zzzzzzzzzz",
+      "password": "Jeremiah23@",
+      "status": "declined",
+      "createdAt": "2025-06-25T14:55:01.770Z"
     }
   ]
 }

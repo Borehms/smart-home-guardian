@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Button, Text, StyleSheet } from "react-native";
 
-export default function HomeScreen({ route }) {
+export default function HomeScreen({ navigation, route }) {
   const username = route.params?.username || "User";
 
   return (
