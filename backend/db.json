@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": "SM1jkLR0AH0JWVSSPFOku",
+      "username": "admin",
+      "password": "$2b$10$5KQEO0zhmJFbZ2/9kRf2t.94V.YYTURXF3eyh9k7vw/Ibso6VQtPi",
+      "role": "primary"
+    },
+    {
+      "id": "Xu10wjV_GBL0HdIKPBNMA",
+      "username": "admin1",
+      "password": "$2b$10$AINHj/YI4kuf4873r9NqD.td62b8DjGhYu5CdTzmwZdkWhgWkoeuW",
+      "role": "primary"
+    },
+    {
+      "id": "q7vISAtHajAWUZ7OYL4iY",
+      "username": "johndoe",
+      "password": "$2b$10$S6et.DsPw08eN0Kw0EaqFOIsXTsYTrHp0vroowgVjU60hRYhV0cDm",
+      "role": "user"
+    }
+  ],
+  "requests": [
+    {
+      "id": "mEnsiC4AVz_13i5hGprAk",
+      "fullName": "John Doe",
+      "username": "johndoe",
+      "deviceName": "Living Room Light",
+      "macAddress": "AA:BB:CC:DD:EE:FF",
+      "password": "WeakPass1!",
+      "status": "approved",
+      "createdAt": "2025-06-24T15:35:33.080Z"
+    },
+    {
+      "id": "Qty5k1AvfyshCOF7Rwbq5",
+      "fullName": "John doe",
+      "username": "johndoe",
+      "deviceName": "iPhone ",
+      "macAddress": "AA:BB:CC:DD:EE",
+      "password": "Userpass123?",
+      "status": "declined",
+      "createdAt": "2025-06-25T07:04:38.640Z"
+    },
+    {
+      "id": "OAx1NfkhJXcKpszLJtXq8",
+      "fullName": "John Doe",
+      "username": "johndoe12",
+      "deviceName": "iPhone",
+      "macAddress": "Ghjhggjjkk",
+      "password": "PassUser123*",
+      "status": "declined",
+      "createdAt": "2025-06-25T07:12:40.130Z"
+    }
+  ]
+}
