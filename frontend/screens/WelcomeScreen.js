@@ -5,7 +5,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 export default function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Home Guardian</Text>
+      <Text style={styles.header}>Smart Home Guardian</Text>
       <Button
         title="Login as Primary User"
         onPress={() => navigation.navigate("PrimaryUserLogin")}
@@ -16,9 +16,8 @@ export default function WelcomeScreen({ navigation }) {
         onPress={() => navigation.navigate("UserLogin")}
       />
       <View style={{ height: 20 }} />
-      {/* Removed the stray +{" "} here */}
       <Button
-        title="Register New Account"
+        title="Create New Account"
         onPress={() => navigation.navigate("Register")}
       />
     </View>

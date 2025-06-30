@@ -8,7 +8,6 @@ export default function PendingRequestsScreen() {
   const loadRequests = async () => {
     try {
       const resp = await api.get("/requests");
-      setRequests(resp.data);
       const pending = resp.data.filter((r) => r.status === "pending");
       setRequests(pending);
     } catch {
@@ -38,9 +37,11 @@ export default function PendingRequestsScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text>
-              {item.fullName} – {item.deviceName}
-            </Text>
+            {/* Display Full Name */}
+            <Text style={styles.fullName}>{item.fullName}</Text>
+            {/* Display Username */}
+            <Text style={styles.username}>Username: {item.username}</Text>
+            <Text style={styles.device}>Device: {item.deviceName}</Text>
             <View style={styles.buttons}>
               <Button
                 title="Approve"
@@ -77,6 +78,18 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
     backgroundColor: "#fafafa",
+  },
+  fullName: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 4,
+  },
+  username: {
+    marginBottom: 4,
+    color: "#555",
+  },
+  device: {
+    marginBottom: 8,
   },
   buttons: {
     flexDirection: "row",

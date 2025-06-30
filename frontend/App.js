@@ -12,6 +12,7 @@ import PrimaryUserDashboardScreen from "./screens/PrimaryUserDashboardScreen";
 import RequestAccessScreen from "./screens/RequestAccessScreen";
 import PendingRequestsScreen from "./screens/PendingRequestsScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import RemoveUserScreen from "./screens/RemoveUserScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,11 @@ export default function App() {
             component={PendingRequestsScreen}
           />
           <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen
+            name="RemoveUserScreen"
+            component={RemoveUserScreen}
+            options={{ title: "Remove Access" }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

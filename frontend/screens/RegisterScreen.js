@@ -1,15 +1,31 @@
+// screens/RegisterScreen.js
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Alert,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import api from "../utils/api";
+import axios from "axios";
 
 export default function RegisterScreen({ navigation }) {
-  //   const [fullName, setFullName] = useState(""); // optional
+  const [fullName, setFullName] = useState("");
+  const [deviceName, setDeviceName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [macAddress, setMacAddress] = useState("");
+  const [role, setRole] = useState("user");
+  const [showPassword, setShowPassword] = useState(false);
+
+  // New state for strength feedback
   const [strength, setStrength] = useState("");
   const [suggestion, setSuggestion] = useState("");
-  const [role, setRole] = useState("user"); // default to standard user
+
+  const API_BASE = "http://192.168.214.214:5000"; // ← replace with your IP
 
   // Password strength evaluator
   const evaluatePasswordStrength = (pwd) => {
@@ -38,83 +54,131 @@ export default function RegisterScreen({ navigation }) {
     setSuggestion(score === 5 ? "" : tips.join(", "));
   };
 
+  // Handle password input change
   const handlePasswordChange = (text) => {
     setPassword(text);
     evaluatePasswordStrength(text);
   };
 
-  const handleRegister = async () => {
-    // basic validation
-    if (!username.trim() || !password.trim()) {
-      Alert.alert("Error", "Username and password are required.");
-      return;
-    }
-    if (strength !== "Strong") {
-      Alert.alert(
-        "Error",
-        "Please choose a stronger password before registering."
-      );
-      return;
-    }
-
+  const handleSubmit = async () => {
     try {
-      await api.post("/auth/register", { username, password, role });
-      Alert.alert("Success", "Registration complete. Please log in.");
-      navigation.navigate(
-        role === "primary" ? "PrimaryUserLogin" : "UserLogin"
-      );
+      if (role === "primary") {
+        await axios.post(`${API_BASE}/api/auth/register`, {
+          username,
+          password,
+          role,
+        });
+        Alert.alert("Success", "Primary user created. Please log in.");
+        navigation.navigate("PrimaryUserLogin");
+      } else {
+        await axios.post(`${API_BASE}/api/requests`, {
+          fullName,
+          username,
+          password,
+          deviceName,
+          macAddress,
+        });
+        Alert.alert(
+          "Request Submitted",
+          "Your access request has been sent. Please wait for approval."
+        );
+        navigation.navigate("Welcome");
+      }
     } catch (err) {
-      Alert.alert(
-        "Registration Failed",
-        err.response?.data?.error || err.message
-      );
+      console.log("Register error:", err.response?.data || err.message);
+      const data = err.response?.data || {};
+      const msg =
+        data.error || data.message || err.message || "Operation failed";
+      Alert.alert("Error", msg);
     }
   };
 
+  // Disable button unless password is strong
+  const isSubmitDisabled = password.length === 0 || strength !== "Strong";
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Register New Account</Text>
+      <Text style={styles.header}>
+        {role === "primary" ? "Create Primary User" : "Request Access"}
+      </Text>
+
+      {role === "user" && (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Full Name"
+            value={fullName}
+            onChangeText={setFullName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Device Name"
+            value={deviceName}
+            onChangeText={setDeviceName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Device MAC Address"
+            value={macAddress}
+            onChangeText={setMacAddress}
+          />
+        </>
+      )}
 
       <TextInput
         style={styles.input}
         placeholder="Username"
-        autoCapitalize="none"
         value={username}
         onChangeText={setUsername}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={handlePasswordChange}
-      />
+      {/* Password input with show/hide and strength */}
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={[styles.input, { flex: 1 }]}
+          placeholder="Password"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={handlePasswordChange}
+        />
+        <TouchableOpacity
+          onPress={() => setShowPassword((v) => !v)}
+          style={styles.toggleButton}
+        >
+          <Text style={styles.toggleText}>
+            {showPassword ? "Hide" : "Show"}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {password.length > 0 && (
         <View style={styles.feedback}>
           <Text style={{ fontWeight: "bold" }}>Strength: {strength}</Text>
-          {suggestion ? (
+          {suggestion !== "" && (
             <Text style={{ color: "#555" }}>Tips: {suggestion}</Text>
-          ) : null}
+          )}
         </View>
       )}
 
-      <Text style={styles.label}>Role</Text>
-      <Picker
-        selectedValue={role}
-        onValueChange={setRole}
-        style={styles.picker}
-      >
-        <Picker.Item label="Regular User" value="user" />
-        <Picker.Item label="Primary User" value="primary" />
-      </Picker>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={role}
+          onValueChange={setRole}
+          style={styles.picker}
+        >
+          <Picker.Item label="Regular User" value="user" />
+          <Picker.Item label="Primary User" value="primary" />
+        </Picker>
+      </View>
 
-      <View style={styles.spacer} />
       <Button
-        title="Register"
-        onPress={handleRegister}
-        disabled={strength !== "Strong"}
+        title={
+          role === "primary"
+            ? "Create Primary Account"
+            : "Submit Access Request"
+        }
+        onPress={handleSubmit}
+        disabled={isSubmitDisabled}
       />
     </View>
   );
@@ -125,8 +189,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 22,
     fontWeight: "bold",
-    textAlign: "center",
     marginBottom: 20,
+    textAlign: "center",
   },
   input: {
     borderWidth: 1,
@@ -135,7 +199,32 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 12,
   },
-  label: { marginTop: 10, marginBottom: 4, fontWeight: "600" },
-  picker: { height: 50, marginBottom: 12 },
-  spacer: { height: 20 },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  toggleButton: {
+    padding: 10,
+    marginLeft: 8,
+  },
+  toggleText: {
+    fontWeight: "600",
+    color: "#007AFF",
+  },
+  feedback: {
+    marginBottom: 12,
+    backgroundColor: "#f2f2f2",
+    padding: 10,
+    borderRadius: 6,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 6,
+    marginBottom: 20,
+  },
+  picker: { height: 50 },
 });
+// This code defines a RegisterScreen component for a React Native app.
+// It allows users to register as either a regular user or a primary user.

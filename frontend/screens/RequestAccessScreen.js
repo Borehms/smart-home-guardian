@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,    // ← added
+} from "react-native";
 import api from "../utils/api";
 
 export default function RequestAccessScreen({ navigation }) {
@@ -10,6 +18,7 @@ export default function RequestAccessScreen({ navigation }) {
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState("");
   const [suggestion, setSuggestion] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // ← added
 
   // Evaluate password strength
   const evaluatePasswordStrength = (pwd) => {
@@ -109,13 +118,24 @@ export default function RequestAccessScreen({ navigation }) {
         onChangeText={setMacAddress}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={handlePasswordChange}
-      />
+      {/* Password input with show/hide toggle */}
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={[styles.input, { flex: 1 }]}
+          placeholder="Password"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={handlePasswordChange}
+        />
+        <TouchableOpacity
+          onPress={() => setShowPassword((prev) => !prev)}
+          style={styles.toggleButton}
+        >
+          <Text style={styles.toggleText}>
+            {showPassword ? "Hide" : "Show"}
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {password.length > 0 && (
         <View style={styles.feedback}>
@@ -149,6 +169,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 12,
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  toggleButton: {
+    padding: 10,
+    marginLeft: 8,
+  },
+  toggleText: {
+    fontWeight: "600",
+    color: "#007AFF",
   },
   feedback: {
     marginBottom: 12,
